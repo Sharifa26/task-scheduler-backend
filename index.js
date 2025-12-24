@@ -1,13 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const routes = require("./routes/taskRoute");
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 const app = express();
 const PORT = 5000;
 
 
-app.use(cors());
+const corsOptions = {
+    origin: process.env.FRONT_URL,
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/tasks", routes);
 
